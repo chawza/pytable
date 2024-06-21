@@ -36,7 +36,7 @@ class Table():
 
         return buffer
 
-    def to_excel(self, sheet_name: str = 'Sheet1') -> Workbook:
+    def to_excel_workbook(self, sheet_name: str = 'Sheet1') -> Workbook:
         workbook = Workbook()
         sheet: Worksheet = workbook.create_sheet(sheet_name)
 
@@ -56,7 +56,7 @@ class Table():
             csv = self.to_csv(delimiter=',')
             file.write(csv.buffer.read())
         elif format == 'xlsx':
-            excel = self.to_excel()
+            excel = self.to_excel_workbook()
             excel.save(file)
         else:
             raise Exception(f'Unhandled format `{format}`')
