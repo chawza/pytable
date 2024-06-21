@@ -1,10 +1,10 @@
-from typing import List
+from typing import List, Literal
 from pydantic import BaseModel
-from io import StringIO
+from io import StringIO, IOBase
 from csv import DictWriter
 
 try:
-    # Optional Depenencies
+    # Optional
     from openpyxl import Workbook
     from openpyxl.worksheet.worksheet import Worksheet
 except ImportError:
@@ -50,6 +50,16 @@ class Table():
             del workbook['Sheet']
 
         return workbook
+    
+    def save(self, file: IOBase, format: Literal['csv', 'xlsx']) -> None:
+        if format == 'csv':
+            csv = self.to_csv(delimiter=',')
+            file.write(csv.buffer.read())
+        elif format == 'xlsx':
+            excel = self.to_excel()
+            excel.save(file)
+        else:
+            raise Exception(f'Unhandled format `{format}`')
     
     def _get_headers(self):
         """Get title for tables name from field's Title. if not set, use field's name on model instead"""
