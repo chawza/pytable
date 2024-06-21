@@ -1,1 +1,1 @@
-from table import Table
+from pytable.table import Table
