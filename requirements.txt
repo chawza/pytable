@@ -1,0 +1,4 @@
+pydantic==2.7.4
+
+# Optional
+openpyxl==3.1.4
